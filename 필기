@@ -1,0 +1,20 @@
+mnist : 이미지/사진 맞추기-28*28개의 데이터를 넣고 ~결과값 나옴
+(사진에서 (0,0)~(28, 28)사이에 픽셀이 한개씩 있음->이후 255로 나누면 0~9까지 중 하나로 결과값이 나옴)
+keras : 모델 만들때 썼던것
+Flatten : 2차원배열
+Dense
+Dropout(0.2) : 20%로 무력화
+(activation = 'relu' : 행렬을 행력곱으로 생각하지 않게함)
+data fitting
+matrics : 잘 판단했는지 확인
+
+큰 순서 : data-pire(학습)-model-matric(검증:정답률)
+
+
+numpy : 수치 계산해줌
+cv2 : 
+<구글-패션 mnist 샘플>
+
+
+운동화사진찍어서 예제해봄
+#list에선 shape 지원안함. numpy에서 지원.
