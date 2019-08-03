@@ -1,0 +1,70 @@
+import tensorflow as tf
+tf.__version__
+//OUT: '2.0.0-beta1'
+
+//<mnist>
+mnist = tf.keras.datasets.mnist
+
+//<train, validation, test>
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+x_train, x_test = x_train / 255.0, x_test / 255.0
+
+//<keras>
+model = tf.keras.models.Sequential([
+  tf.keras.layers.Flatten(input_shape=(28, 28)),
+  tf.keras.layers.Dense(128, activation = 'relu'),
+  tf.keras.layers.Dropout(0.2),
+  tf.keras.layers.Dense(10, activation = 'softmax')
+])
+
+//<layers>
+model.summary()
+
+Model: "sequential"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+flatten (Flatten)            (None, 784)               0         
+_________________________________________________________________
+dense (Dense)                (None, 128)               100480    
+_________________________________________________________________
+dropout (Dropout)            (None, 128)               0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 10)                1290      
+=================================================================
+Total params: 101,770
+Trainable params: 101,770
+Non-trainable params: 0
+_________________________________________________________________
+
+//<metrics>
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+              
+//<fitting>
+model.fit(x_train, y_train, epochs = 5)
+
+WARNING: Logging before flag parsing goes to stderr.
+W0721 16:25:51.714471 17304 deprecation.py:323] From C:\Users\ladna\Anaconda3\lib\site-packages\tensorflow\python\ops\math_grad.py:1250: add_dispatch_support.<locals>.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.where in 2.0, which has the same broadcast rule as np.where
+Train on 60000 samples
+Epoch 1/5
+60000/60000 [==============================] - 7s 118us/sample - loss: 0.2974 - accuracy: 0.9134
+Epoch 2/5
+60000/60000 [==============================] - 6s 99us/sample - loss: 0.1431 - accuracy: 0.9581
+Epoch 3/5
+60000/60000 [==============================] - 6s 104us/sample - loss: 0.1065 - accuracy: 0.9688
+Epoch 4/5
+60000/60000 [==============================] - 6s 106us/sample - loss: 0.0848 - accuracy: 0.9731
+Epoch 5/5
+60000/60000 [==============================] - 6s 104us/sample - loss: 0.0734 - accuracy: 0.9772
+
+//OUT: <tensorflow.python.keras.callbacks.History at 0x2869dcf87b8>
+
+
+//<what we want>
+model.evaluate(x_test, y_test)
+10000/10000 [==============================] - 1s 55us/sample - loss: 0.0726 - accuracy: 0.9789
+//OUT: [0.07256656991718337, 0.9789]
